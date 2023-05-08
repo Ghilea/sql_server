@@ -1,0 +1,20 @@
+{
+  "name": "pokedexserver",
+  "version": "0.0.1",
+  "type": "module",
+  "author": "Ghilea",
+  "dependencies": {
+    "axios": "^1.4.0"
+  },
+  "devDependencies": {
+    "@fastify/cors": "^8.2.1",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.17.0",
+    "knex": "^2.4.2",
+    "mysql2": "^3.3.0"
+  },
+  "scripts": {
+    "server": "node server/",
+    "start": "npm run server"
+  }
+}
