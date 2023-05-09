@@ -48,6 +48,7 @@ export const FetchApi = (app) => {
     //pokemons
     app.get("/getPokemons", (req, res) => {
       getPokemons(knex, res);
+      res.json({message: "Pokemons fetched"})
     });
 
     app.post("/getPokemon", (req, res) => {
