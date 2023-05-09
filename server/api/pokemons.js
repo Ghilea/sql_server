@@ -21,16 +21,9 @@ export const getPokemon = async (knex, res, id) => {
 };
 
 export const getPokemons = async (knex, res) => {
-  try {
-    await knex
-      .select("id", "name", "image", "weight", "abilities", "stats", "type")
-      .from("pokemons")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
-  } catch (err) {
-    console.log(`Error: ${err}`);
-  }
+
+    
+
 };
 
 export const addPokemons = async (knex, req) => {

@@ -4,10 +4,15 @@ import {
   getUsers,
   createAccount,
   updateUser,
-  updateLoginDate
+  updateLoginDate,
 } from "./api/users.js";
 import { getLike, getLikes, deleteLike, addLike } from "./api/likes.js";
-import { getNotification, addNotification, deleteNotification, updateNotification } from "./api/notification.js";
+import {
+  getNotification,
+  addNotification,
+  deleteNotification,
+  updateNotification,
+} from "./api/notification.js";
 import { getPokemon, getPokemons, addPokemons } from "./api/pokemons.js";
 
 export const FetchApi = (app) => {
@@ -19,7 +24,7 @@ export const FetchApi = (app) => {
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
-        database: process.env.DB_DATABASE
+        database: process.env.DB_DATABASE,
       },
     });
 
@@ -46,9 +51,13 @@ export const FetchApi = (app) => {
     });
 
     //pokemons
-    app.get("/getPokemons", (req, res) => {
-      getPokemons(knex, res);
-      res.json({message: "Pokemons fetched"})
+    app.get("/getPokemons", async (req, res) => {
+      res.send(
+        await knex
+          .select("id", "name", "image", "weight", "abilities", "stats", "type")
+          .from("pokemons")
+          .then((query) => query)
+      );
     });
 
     app.post("/getPokemon", (req, res) => {
