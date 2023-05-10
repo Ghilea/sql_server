@@ -1,29 +1,37 @@
-export const getLike = async (knex, res, id) => {
+export const getLike = async (knex, req) => {
   try {
-    await knex
-      .select(
-        "user_id",
-        "pokemon_id",
-        "added",
-      )
-      .where("user_id", userId, "pokemon_id", pokemon_id)
-      .from("likes")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
+   return await knex
+     .select("user_id", "pokemon_id", "added")
+     .where("user_id", req.query.userId, "pokemon_id", req.query.pokemonId)
+     .from("likes")
   } catch (err) {
     console.log(`Error: ${err}`);
   }
 };
 
-export const getLikes = async (knex, res) => {
+export const getOwntLikes = async (knex, req) => {
   try {
-    await knex
+    return await knex
       .select("user_id", "pokemon_id", "added")
-      .from("likes")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
+      .where("user_id", req.query.userId)
+      .from("likes");
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+};
+
+export const getLikes = async (knex, req) => {
+  try {
+
+    const ownLikes = await getOwntLikes(knex, req);
+
+    console.log(ownLikes)
+
+    return await knex
+      .select("user_id", "pokemon_id", "added")
+      .whereNot("user_id", req.query.userId)
+      .where()
+      .from("likes");
   } catch (err) {
     console.log(`Error: ${err}`);
   }
@@ -34,7 +42,7 @@ export const addLike = async (knex, req) => {
     await knex
       .insert({
         user_id: req.body.userId,
-        pokemon_id: req.body.pokemon_id,
+        pokemon_id: req.body.pokemonId,
         added: req.body.added
       })
       .into("likes");

@@ -39,32 +39,27 @@ export const FetchApi = (app) => {
     });
 
     app.get("/getUsers", (req, res) => {
-      getUsers(knex, res);
+      return getUsers(knex, res);
     });
 
     app.get("/getUser", (req, res) => {
-      getUser(knex, res);
+      return getUser(knex, req);
     });
 
     app.put("/updateLoginDate", (req, res) => {
-      updateLoginDate(knex, req, res);
+      return updateLoginDate(knex, req, res);
     });
 
     //pokemons
     app.get("/getPokemons", async (req, res) => {
-      res.send(
-        await knex
-          .select("id", "name", "image", "weight", "abilities", "stats", "type")
-          .from("pokemons")
-          .then((query) => query)
-      );
+      return getPokemons(knex, req);
     });
 
-    app.post("/getPokemon", (req, res) => {
-      getPokemon(knex, res);
+    app.get("/getPokemon", async (req, res) => {
+      return getPokemon(knex, req);
     });
 
-    app.get("/addPokemons", (req, res) => {
+    app.post("/addPokemons", async (req, res) => {
       addPokemons(knex, req);
     });
 
@@ -78,11 +73,11 @@ export const FetchApi = (app) => {
     });
 
     app.get("/getLike", (req, res) => {
-      getLike(knex, res);
+      return getLike(knex, req);
     });
 
     app.get("/getLikes", (req, res) => {
-      getLikes(knex, res);
+      return getLikes(knex, req);
     });
 
     //notification
@@ -95,7 +90,7 @@ export const FetchApi = (app) => {
     });
 
     app.get("/getNotification", (req, res) => {
-      getNotification(knex, res);
+      return getNotification(knex, req);
     });
 
     app.get("/updateNotification", (req, res) => {

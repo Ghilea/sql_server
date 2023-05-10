@@ -1,16 +1,12 @@
-export const getNotification = async (knex, res, id) => {
+export const getNotification = async (knex, req) => {
   try {
-    await knex
+    return await knex
       .select(
-        "user_id",
         "likes",
         "added",
       )
-      .where("user_id", id)
+      .where("user_id", req.query.userId)
       .from("notification")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
   } catch (err) {
     console.log(`Error: ${err}`);
   }

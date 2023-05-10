@@ -1,42 +1,56 @@
-export const getPokemon = async (knex, res, id) => {
+export const getPokemon = async (knex, req) => {
   try {
-    await knex
+    return await knex
       .select(
         "id",
         "name",
         "image",
         "weight",
+        "height",
         "abilities",
         "stats",
         "type"
       )
-      .where("id", id)
-      .from("pokemons")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
+      .where("id", req.query.pokemonId)
+      .from("pokemons");
   } catch (err) {
     console.log(`Error: ${err}`);
   }
 };
 
-export const getPokemons = async (knex, res) => {
-
-    
-
+export const getPokemons = async (knex, req) => {
+  try {
+    return await knex
+      .select(
+        "id",
+        "name",
+        "image",
+        "weight",
+        "height",
+        "abilities",
+        "stats",
+        "type"
+      )
+      .where("name", "like", `%${req.query.search}%`)
+      .orWhere("id", "like", `%${req.query.search}%`)
+      .from("pokemons")
+      .orderBy(req.query.sort, req.query.order);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
 };
 
 export const addPokemons = async (knex, req) => {
-  console.log(req)
   try {
     await knex
       .insert({
         name: req.body.name,
         image: req.body.image,
+        height: req.body.height,
         weight: req.body.weight,
         abilities: req.body.abilities,
         stats: req.body.stats,
-        type: req.body.type
+        type: req.body.type,
       })
       .into("pokemons");
   } catch (err) {

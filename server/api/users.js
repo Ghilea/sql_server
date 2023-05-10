@@ -1,17 +1,9 @@
-export const getUser = async (knex, res, id) => {
+export const getUser = async (knex, req) => {
   try {
-    await knex
-      .select(
-        "username",
-        "email",
-        "password",
-        "lastLogin"
-      )
-      .where("id", id)
-      .from("users")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
+    return await knex
+      .select("id", "username", "email", "password", "lastLogin")
+      .where("id", req.query.userId)
+      .from("users");
   } catch (err) {
     console.log(`Error: ${err}`);
   }
@@ -19,12 +11,9 @@ export const getUser = async (knex, res, id) => {
 
 export const getUsers = async (knex, res) => {
   try {
-    await knex
-      .select("username", "email", "lastLogin")
+    return await knex
+      .select("id", "username", "email", "password", "lastLogin")
       .from("users")
-      .then((query) => {
-        return res.code(200).send(query);
-      });
   } catch (err) {
     console.log(`Error: ${err}`);
   }
@@ -37,9 +26,9 @@ export const createAccount = async (knex, req) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        lastLogin: req.body.lastLogin
+        lastLogin: req.body.lastLogin,
       })
-      .into("users")
+      .into("users");
   } catch (err) {
     console.log(`Error: ${err}`);
   }
@@ -51,10 +40,10 @@ export const updateUser = async (knex, req, res) => {
       .update({
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
       })
       .where({ id: req.body.id })
-      .into("users")
+      .into("users");
   } catch (err) {
     console.log(`Error: ${err}`);
   }
