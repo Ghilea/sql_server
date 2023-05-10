@@ -46,8 +46,8 @@ export const FetchApi = (app) => {
       return getUser(knex, req);
     });
 
-    app.put("/updateLoginDate", (req, res) => {
-      return updateLoginDate(knex, req, res);
+    app.patch("/updateLoginDate", (req, res) => {
+      updateLoginDate(knex, req);
     });
 
     //pokemons
@@ -68,8 +68,8 @@ export const FetchApi = (app) => {
       addLike(knex, req);
     });
 
-    app.put("/deleteLike", (req, res) => {
-      deleteLike(knex, req, res);
+    app.delete("/deleteLike", (req, res) => {
+      deleteLike(knex, req);
     });
 
     app.get("/getLike", (req, res) => {
@@ -85,16 +85,16 @@ export const FetchApi = (app) => {
       addNotification(knex, req);
     });
 
-    app.put("/deleteNotification", (req, res) => {
-      deleteNotification(knex, req, res);
+    app.patch("/deleteNotification", (req) => {
+      deleteNotification(knex, req);
     });
 
     app.get("/getNotification", (req, res) => {
       return getNotification(knex, req);
     });
 
-    app.get("/updateNotification", (req, res) => {
-      updateNotification(knex, res);
+    app.patch("/updateNotification", (req) => {
+      updateNotification(knex, req);
     });
   } catch (err) {
     console.error(`Error: ${err}`);

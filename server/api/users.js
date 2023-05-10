@@ -5,7 +5,7 @@ export const getUser = async (knex, req) => {
       .where("id", req.query.userId)
       .from("users");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error getUser: ${err}`);
   }
 };
 
@@ -15,7 +15,7 @@ export const getUsers = async (knex, res) => {
       .select("id", "username", "email", "password", "lastLogin")
       .from("users")
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error getUsers: ${err}`);
   }
 };
 
@@ -30,7 +30,7 @@ export const createAccount = async (knex, req) => {
       })
       .into("users");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error createAccount: ${err}`);
   }
 };
 
@@ -45,19 +45,19 @@ export const updateUser = async (knex, req, res) => {
       .where({ id: req.body.id })
       .into("users");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error updateUser: ${err}`);
   }
 };
 
-export const updateLoginDate = async (knex, req, res) => {
+export const updateLoginDate = async (knex, req) => {
   try {
     await knex
       .update({
         lastLogin: req.body.lastLogin,
       })
-      .where({ id: req.body.id })
+      .where({ id: req.body.userId })
       .into("users");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error updateLoginDate: ${err}`);
   }
 };

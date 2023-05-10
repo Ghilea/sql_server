@@ -14,7 +14,7 @@ export const getPokemon = async (knex, req) => {
       .where("id", req.query.pokemonId)
       .from("pokemons");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error getPokemon: ${err}`);
   }
 };
 
@@ -36,7 +36,7 @@ export const getPokemons = async (knex, req) => {
       .from("pokemons")
       .orderBy(req.query.sort, req.query.order);
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error getPokemons: ${err}`);
   }
 };
 
@@ -54,6 +54,6 @@ export const addPokemons = async (knex, req) => {
       })
       .into("pokemons");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error addPokemons: ${err}`);
   }
 };

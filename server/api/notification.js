@@ -8,7 +8,7 @@ export const getNotification = async (knex, req) => {
       .where("user_id", req.query.userId)
       .from("notification")
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error getNotification: ${err}`);
   }
 };
 
@@ -22,32 +22,33 @@ export const addNotification = async (knex, req) => {
       })
       .into("notification");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error addNotificiation: ${err}`);
   }
 };
 
-export const updateNotification = async (knex, req, res) => {
+export const updateNotification = async (knex, req) => {
   try {
     await knex
       .update({
-        user_id: req.body.userId,
         likes: req.body.likes,
         added: req.body.added
       })
-      .where({ id: req.body.id })
+      .where({ user_id: req.body.userId })
       .into("notification")
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error updateNotification: ${err}`);
   }
 };
 
-export const deleteNotification = async (knex, req, res) => {
+export const deleteNotification = async (knex, req) => {
   try {
     await knex
-      .delete()
+      .update({
+        likes: []
+      })
       .where({ id: req.body.id })
       .into("notification");
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error deleteNotification: ${err}`);
   }
 };
