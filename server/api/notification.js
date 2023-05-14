@@ -17,7 +17,7 @@ export const addNotification = async (knex, req) => {
     await knex
       .insert({
         user_id: req.body.userId,
-        likes: req.body.likes,
+        likes: {},
         added: req.body.added,
       })
       .into("notification");
@@ -31,10 +31,10 @@ export const updateNotification = async (knex, req) => {
     await knex
       .update({
         likes: req.body.likes,
-        added: req.body.added
+        added: req.body.added,
       })
       .where({ user_id: req.body.userId })
-      .into("notification")
+      .into("notification");
   } catch (err) {
     console.log(`Error updateNotification: ${err}`);
   }
@@ -43,10 +43,8 @@ export const updateNotification = async (knex, req) => {
 export const deleteNotification = async (knex, req) => {
   try {
     await knex
-      .update({
-        likes: []
-      })
-      .where({ id: req.body.id })
+      .delete()
+      .where({ user_id: req.query.userId })
       .into("notification");
   } catch (err) {
     console.log(`Error deleteNotification: ${err}`);

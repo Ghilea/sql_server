@@ -21,6 +21,17 @@ export const getLikes = async (knex, req) => {
   }
 };
 
+export const getOtherLikes = async (knex, req) => {
+  try {
+    return await knex
+      .select("user_id", "pokemon_id", "added")
+      .whereNot("user_id", req.query.userId)
+      .from("likes");
+  } catch (err) {
+    console.log(`Error getOtherLikes: ${err}`);
+  }
+};
+
 export const addLike = async (knex, req) => {
   try {
     await knex
@@ -29,8 +40,8 @@ export const addLike = async (knex, req) => {
         pokemon_id: req.body.pokemonId,
         added: req.body.added,
       })
-      .whereNot("user_id", req.query.userId)
-      .andWhereNot("pokemon_id", req.query.pokemonId)
+      .whereNot("user_id", req.body.userId)
+      .andWhereNot("pokemon_id", req.body.pokemonId)
       .into("likes");
   } catch (err) {
     console.log(`Error addLike: ${err}`);

@@ -6,7 +6,7 @@ import {
   updateUser,
   updateLoginDate,
 } from "./api/users.js";
-import { getLike, getLikes, deleteLike, addLike } from "./api/likes.js";
+import { getLike, getLikes, getOtherLikes, deleteLike, addLike } from "./api/likes.js";
 import {
   getNotification,
   addNotification,
@@ -80,12 +80,16 @@ export const FetchApi = (app) => {
       return getLikes(knex, req);
     });
 
+    app.get("/getOtherLikes", (req, res) => {
+      return getOtherLikes(knex, req);
+    });
+
     //notification
     app.post("/addNotification", (req, res) => {
       addNotification(knex, req);
     });
 
-    app.patch("/deleteNotification", (req) => {
+    app.delete("/deleteNotification", (req, res) => {
       deleteNotification(knex, req);
     });
 
