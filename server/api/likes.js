@@ -24,9 +24,11 @@ export const getLikes = async (knex, req) => {
 export const getOtherLikes = async (knex, req) => {
   try {
     return await knex
-      .select("user_id", "pokemon_id", "added")
-      .whereNot("user_id", req.query.userId)
-      .from("likes");
+      .raw(
+        `SELECT other.id, other.user_id, other.pokemon_id, other.added FROM pokedex.likes as user
+          INNER JOIN pokedex.likes as other ON other.user_id != ${req.query.userId}
+        WHERE user.pokemon_id = other.pokemon_id AND user.added >= '${req.query.lastLogin}'`
+      )
   } catch (err) {
     console.log(`Error getOtherLikes: ${err}`);
   }
