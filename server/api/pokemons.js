@@ -20,7 +20,6 @@ export const getPokemon = async (knex, req) => {
 
 export const getPokemons = async (knex, req) => {
   try {
-    console.log(req.query);
     return await knex
       .select(
         "id",
