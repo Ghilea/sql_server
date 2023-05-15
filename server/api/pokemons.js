@@ -20,6 +20,7 @@ export const getPokemon = async (knex, req) => {
 
 export const getPokemons = async (knex, req) => {
   try {
+    console.log(req.query);
     return await knex
       .select(
         "id",
@@ -34,10 +35,7 @@ export const getPokemons = async (knex, req) => {
       .where("name", "like", `%${req.query.search}%`)
       .orWhere("id", "like", `%${req.query.search}%`)
       .from("pokemons")
-      .orderBy([
-        req.query.orderName !== '' && { column: "name", order: req.query.orderName },
-        req.query.orderId !== '' && { column: "id", order: req.query.orderId },
-      ]);
+      .orderBy(`${req.query.sort}`, `${req.query.order}`);
   } catch (err) {
     console.log(`Error getPokemons: ${err}`);
   }
