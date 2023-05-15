@@ -11,7 +11,7 @@ export const getPokemon = async (knex, req) => {
         "stats",
         "type"
       )
-      .where("id", req.query.pokemonId)
+      .where("pokemonId", req.query.pokemonId)
       .from("pokemons");
   } catch (err) {
     console.log(`Error getPokemon: ${err}`);
@@ -36,18 +36,16 @@ export const getPokemons = async (knex, req) => {
       .orWhere("pokemonId", "like", `%${req.query.search}%`)
       .from("pokemons")
       .orderBy(`${req.query.sort}`, `${req.query.order}`)
-      .limit(10)
-      .offset(offset);
+      .offset(offset)
+      .limit(10);
   } catch (err) {
     console.log(`Error getPokemons: ${err}`);
   }
 };
 
-export const getAllPokemons = async (knex, req) => {
+export const getAllPokemons = async (knex) => {
   try {
-    return await knex
-      .select("pokemonId")
-      .from("pokemons");
+    return await knex.select("pokemonId").from("pokemons");
   } catch (err) {
     console.log(`Error getPokemons: ${err}`);
   }
