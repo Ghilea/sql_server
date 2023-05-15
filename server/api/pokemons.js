@@ -20,7 +20,8 @@ export const getPokemon = async (knex, req) => {
 
 export const getPokemons = async (knex, req) => {
   try {
-    const offset = (req.query.page - 1) * 10;
+    const offset = (req.query.page > 0 ? (req.query.page - 1) : 0) * 10;
+    
     return await knex
       .select(
         "pokemonId",
@@ -36,7 +37,7 @@ export const getPokemons = async (knex, req) => {
       .orWhere("pokemonId", "like", `%${req.query.search}%`)
       .from("pokemons")
       .orderBy(`${req.query.sort}`, `${req.query.order}`)
-      .offset(offset)
+      .offset(Number(offset))
       .limit(10);
   } catch (err) {
     console.log(`Error getPokemons: ${err}`);
