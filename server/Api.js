@@ -13,7 +13,7 @@ import {
   deleteNotification,
   updateNotification,
 } from "./api/notification.js";
-import { getPokemon, getPokemons, addPokemons } from "./api/pokemons.js";
+import { getPokemon, getPokemons, addPokemons, getAllPokemons } from "./api/pokemons.js";
 
 export const FetchApi = (app) => {
   try {
@@ -57,6 +57,10 @@ export const FetchApi = (app) => {
 
     app.get("/getPokemon", async (req, res) => {
       return getPokemon(knex, req);
+    });
+
+    app.get("/getAllPokemons", async (req, res) => {
+      return getAllPokemons(knex, req);
     });
 
     app.post("/addPokemons", async (req, res) => {
