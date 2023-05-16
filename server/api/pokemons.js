@@ -65,7 +65,7 @@ export const addPokemons = async (knex, req) => {
         stats: req.body.stats,
         type: req.body.type,
       })
-      .whereNot("pokemonId", req.body.pokemonId)
+      .whereNot("name", req.body.name)
       .into("pokemons");
   } catch (err) {
     console.log(`Error addPokemons: ${err}`);
